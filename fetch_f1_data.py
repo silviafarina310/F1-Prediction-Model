@@ -11,7 +11,7 @@ import requests
 import pandas as pd
 import time
 
-BASE_URL = "https://f1-api.jolpica.com/v1"
+BASE_URL = "https://api.jolpi.ca/ergast/f1"
 SEASONS = [2022, 2023, 2024, 2025, 2026]
 PAGE_SIZE = 100  # Max number of results per page
 REQUEST_DELAY = 0.5  # Delay between API requests in seconds
