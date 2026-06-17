@@ -51,26 +51,41 @@ def build_features(df: pd.DataFrame):
         .transform(lambda s: s.shift(1).rolling(5, min_periods=1).mean())
     )
 
-    # Define track characteristics
-    circuit_characteristics = {
+    circuit_map = {
+        "albert_park": {"track_type": "street", "downforce": "medium"},
+        "shanghai": {"track_type": "traditional", "downforce": "medium"},
+        "suzuka": {"track_type": "traditional", "downforce": "high"},
+        "bahrain": {"track_type": "traditional", "downforce": "medium"},
+        "jeddah": {"track_type": "street", "downforce": "low"},
+        "miami": {"track_type": "street", "downforce": "medium"},
+        "villeneuve": {"track_type": "street", "downforce": "low"},
         "monaco": {"track_type": "street", "downforce": "high"},
-        "baku": {"track_type": "street", "downforce": "low"},
-        "singapore": {"track_type": "street", "downforce": "high"},
-        "monza": {"track_type": "traditional", "downforce": "low"},
-        "spa": {"track_type": "traditional", "downforce": "low"},
         "catalunya": {"track_type": "traditional", "downforce": "high"},
+        "red_bull_ring": {"track_type": "traditional", "downforce": "medium"},
+        "silverstone": {"track_type": "traditional", "downforce": "high"},
+        "spa": {"track_type": "traditional", "downforce": "low"},
         "hungaroring": {"track_type": "traditional", "downforce": "high"},
-        "silverstone": {"track_type": "traditional", "downforce": "medium"},
-        "suzuka": {"track_type": "traditional", "downforce": "medium"},
-        # Add the rest of the calendar...
+        "zandvoort": {"track_type": "traditional", "downforce": "high"},
+        "monza": {"track_type": "traditional", "downforce": "low"},
+        "madrid": {"track_type": "street", "downforce": "medium"},
+        "baku": {"track_type": "street", "downforce": "low"},
+        "marina_bay": {"track_type": "street", "downforce": "high"},
+        "americas": {"track_type": "traditional", "downforce": "medium"},
+        "rodriguez": {"track_type": "traditional", "downforce": "high"},
+        "interlagos": {"track_type": "traditional", "downforce": "medium"},
+        "vegas": {"track_type": "street", "downforce": "low"},
+        "lusail": {"track_type": "traditional", "downforce": "medium"},
+        "yas_marina": {"track_type": "traditional", "downforce": "medium"}
     }
 
-    # Map the dictionaries to the dataframe
-    df['track_type'] = df['circuit_id'].apply(lambda x: circuit_characteristics.get(x, {}).get('track_type', 'traditional'))
-    df['downforce_level'] = df['circuit_id'].apply(lambda x: circuit_characteristics.get(x, {}).get('downforce', 'medium'))
+    df['track_type'] = df['circuit_id'].apply(lambda x: circuit_map.get(x, {}).get('track_type', 'traditional'))
+    df['downforce_level'] = df['circuit_id'].apply(lambda x: circuit_map.get(x, {}).get('downforce', 'medium'))
 
-    # Convert categorical text into numeric columns (One-Hot Encoding) so the Ridge model can read it
-    df = pd.get_dummies(df, columns=["track_type", "downforce_level"], drop_first=False)
+    """# Convert categorical text into numeric columns (One-Hot Encoding) so the Ridge model can read it
+    df = pd.get_dummies(df, columns=["track_type", "downforce_level"], drop_first=False)"""
+
+    df['track_type'] = df['track_type'].astype('category')
+    df['downforce_level'] = df['downforce_level'].astype('category') #Categorical features for LIghtGBM
  
     return df
 
