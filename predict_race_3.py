@@ -36,7 +36,7 @@ NUMERIC_FEATURES = [
     "driver_circuit_avg_pos",
     "driver_dnf_rate_5",
 ]
-
+CATEGORICAL_FEATURES = ["track_type", "downforce_level"]  # Categorical features for LightGBM
 
 def fetch_qualifying_live(season: int, round_: int) -> list[dict]:
     url = f"https://api.jolpi.ca/ergast/f1/{season}/{round_}/qualifying/"
@@ -101,71 +101,65 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--season", type=int, required=True)
     parser.add_argument("--round", type=int, required=True)
-    parser.add_argument("--live", action="store_true",
-                         help="Fetch live qualifying from Jolpica instead of using the historical CSV")
+    parser.add_argument("--live", action="store_true")
     args = parser.parse_args()
 
     history = pd.read_csv(RESULTS_PATH)
 
+    from features import build_features
+    history = build_features(history)
+
     if args.live:
         target_rows = pd.DataFrame(fetch_qualifying_live(args.season, args.round))
+        # Add features to live data
+        target_rows = build_features(target_rows)
         combined = pd.concat([history, target_rows], ignore_index=True)
     else:
         combined = history.copy()
 
-    combined = build_features(combined)
-
     before_mask = (combined["season"] < args.season) | (
         (combined["season"] == args.season) & (combined["round"] < args.round)
     )
+    
     train = combined[before_mask].copy()
     target = combined[(combined["season"] == args.season) & (combined["round"] == args.round)].copy()
 
     if target.empty:
-        raise SystemExit(
-            f"No data found for season {args.season} round {args.round}. "
-            f"Use --live for a race not yet in the CSV."
-        )
+        raise SystemExit(f"No data found for {args.season} round {args.round}.")
 
     fill = train[NUMERIC_FEATURES].mean()
-    # LightGBM Ranker requires us to tell it how many drivers are in each race (the "group")
-    train_groups = train.groupby(['season', 'round']).size().values
-    
-    # Initialize the Ranker
-    model = lgb.LGBMRanker(
-        objective="lambdarank", 
-        metric="ndcg", 
-        importance_type="gain"
-    )
 
+    train_groups = train.groupby(['season', 'round']).size().values
     train_labels = 25 - train["position"]
+    
+    model = lgb.LGBMRanker(objective="lambdarank", metric="ndcg", importance_type="gain")
 
     model.fit(
-        X=train[NUMERIC_FEATURES].fillna(fill).fillna(0),
-        y=train_labels, 
-        group=train_groups
+        X=train[NUMERIC_FEATURES + CATEGORICAL_FEATURES].fillna(0),
+        y=train_labels,
+        group=train_groups,
+        categorical_feature=CATEGORICAL_FEATURES,
     )
 
-    # Predict the target race
-    target["model_pred"] = model.predict(target[NUMERIC_FEATURES].fillna(fill).fillna(0))
-   
+    target["model_pred"] = model.predict(target[NUMERIC_FEATURES + CATEGORICAL_FEATURES].fillna(0))
     target["model_pred_pos"] = target["model_pred"].rank(ascending=False)
     
-    # Blend with the grid (40% grid, 60% model)
+    #Blend with grid (40% grid, 60% model)
     target["blend_score"] = GRID_WEIGHT * target["grid"] + (1 - GRID_WEIGHT) * target["model_pred_pos"]
     target = target.sort_values("blend_score").reset_index(drop=True)
     target["predicted_position"] = range(1, len(target) + 1)
 
-
-    print(f"\nPredicted finishing order -- {target['race_name'].iloc[0]} ({args.season} round {args.round}):\n")
-    display_df = target.copy()
+    print(f"\nPredicted finishing order for {args.season} round {args.round}:\n")
+    
+    # Define the base columns we definitely have
     cols = ["predicted_position", "driver_code", "family_name", "constructor_name", "grid"]
-    if display_df["position"].notna().any():
-        display_df = display_df.rename(columns={"position": "actual_position"})
-        display_df["actual_position"] = display_df["actual_position"].astype(int)
-        cols.append("actual_position")
-    print(display_df[cols].to_string(index=False))
-
+    
+    # Only try to add 'position' if it exists in the dataframe AND is not full of NaNs (for live races)
+    if "position" in target.columns and target["position"].notna().any():
+        cols.append("position")
+    
+    # Print the dataframe using only the columns we confirmed exist
+    print(target[cols].to_string(index=False))
 
 if __name__ == "__main__":
     main()
