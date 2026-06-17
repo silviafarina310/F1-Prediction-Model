@@ -116,11 +116,11 @@ def main():
         importance_type="gain"
     )
 
-    # Note: We use negative position because LightGBM assumes HIGHER numbers are better. 
-    # In F1, finishing P1 is better than P20, so we flip the target.
+    train_labels = 25 - train["position"]
+
     model.fit(
         X=train[NUMERIC_FEATURES].fillna(fill).fillna(0),
-        y=-train["position"], 
+        y=train_labels, 
         group=train_groups
     )
 
