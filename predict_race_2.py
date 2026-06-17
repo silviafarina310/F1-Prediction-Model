@@ -1,5 +1,5 @@
 """
-predict_race.py
+predict_race_2.py
 
 Predicts the full finishing order for a race using the approach validated
 via walk-forward testing: a blend of grid position and a Ridge regression
@@ -17,8 +17,8 @@ Either way, the model is trained only on races strictly before SEASON/ROUND,
 so a backtest never gets to peek at its own future.
 
 Usage:
-    python predict_race.py --season 2026 --round 7
-    python predict_race.py --season 2026 --round 9 --live
+    python predict_race_2.py --season 2026 --round 7
+    python predict_race_2.py --season 2026 --round 9 --live
 """
 
 import argparse

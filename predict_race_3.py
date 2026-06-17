@@ -1,3 +1,25 @@
+"""
+predict_race_3.py
+
+Predicts the full finishing order for a race using the approach validated
+via walk-forward testing: a blend of grid position and LightGBM Ranker model trained on engineered form/history features.
+
+Two modes:
+  (default)   Use SEASON/ROUND's grid positions straight from the historical
+              results CSV: useful for backtesting against a race we
+              already know the real outcome of.
+  --live      Fetch real qualifying results for SEASON/ROUND from the
+              Jolpica API instead: use this right after qualifying finishes
+              for a race that hasn't been run yet.
+
+Either way, the model is trained only on races strictly before SEASON/ROUND,
+so a backtest never gets to peek at its own future.
+
+Usage:
+    python predict_race_3.py --season 2026 --round 7
+    python predict_race_3.py --season 2026 --round 9 --live
+"""
+
 import argparse
 import requests
 import pandas as pd
@@ -126,8 +148,7 @@ def main():
 
     # Predict the target race
     target["model_pred"] = model.predict(target[NUMERIC_FEATURES].fillna(fill).fillna(0))
-    
-    # We rank the predictions (highest score gets P1)
+   
     target["model_pred_pos"] = target["model_pred"].rank(ascending=False)
     
     # Blend with the grid (40% grid, 60% model)
