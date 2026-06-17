@@ -50,6 +50,27 @@ def build_features(df: pd.DataFrame):
         df.groupby("driver_id")["dnf"]
         .transform(lambda s: s.shift(1).rolling(5, min_periods=1).mean())
     )
+
+    # Define track characteristics
+    circuit_characteristics = {
+        "monaco": {"track_type": "street", "downforce": "high"},
+        "baku": {"track_type": "street", "downforce": "low"},
+        "singapore": {"track_type": "street", "downforce": "high"},
+        "monza": {"track_type": "traditional", "downforce": "low"},
+        "spa": {"track_type": "traditional", "downforce": "low"},
+        "catalunya": {"track_type": "traditional", "downforce": "high"},
+        "hungaroring": {"track_type": "traditional", "downforce": "high"},
+        "silverstone": {"track_type": "traditional", "downforce": "medium"},
+        "suzuka": {"track_type": "traditional", "downforce": "medium"},
+        # Add the rest of the calendar...
+    }
+
+    # Map the dictionaries to the dataframe
+    df['track_type'] = df['circuit_id'].apply(lambda x: circuit_characteristics.get(x, {}).get('track_type', 'traditional'))
+    df['downforce_level'] = df['circuit_id'].apply(lambda x: circuit_characteristics.get(x, {}).get('downforce', 'medium'))
+
+    # Convert categorical text into numeric columns (One-Hot Encoding) so the Ridge model can read it
+    df = pd.get_dummies(df, columns=["track_type", "downforce_level"], drop_first=False)
  
     return df
 
