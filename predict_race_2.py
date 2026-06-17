@@ -7,10 +7,10 @@ model trained on engineered form/history features.
 
 Two modes:
   (default)   Use SEASON/ROUND's grid positions straight from the historical
-              results CSV: useful for backtesting against a race we
+              results CSV -- useful for backtesting against a race we
               already know the real outcome of.
   --live      Fetch real qualifying results for SEASON/ROUND from the
-              Jolpica API instead: use this right after qualifying finishes
+              Jolpica API instead -- use this right after qualifying finishes
               for a race that hasn't been run yet.
 
 Either way, the model is trained only on races strictly before SEASON/ROUND,
@@ -98,34 +98,34 @@ def build_features(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--season", type=int, required=True)
-    parser.add_argument("--round", type=int, required=True)
-    parser.add_argument("--live", action="store_true",
-                         help="Fetch live qualifying from Jolpica instead of using the historical CSV")
-    args = parser.parse_args()
-
-    history = pd.read_csv(RESULTS_PATH)
-
-    if args.live:
-        target_rows = pd.DataFrame(fetch_qualifying_live(args.season, args.round))
+def predict_race(history: pd.DataFrame, season: int, round_: int, live: bool = False) -> pd.DataFrame:
+    """
+    Returns the target race's rows with a predicted_position column filled
+    in, sorted into the predicted finishing order. This is the one place
+    the model itself lives -- both the CLI below and the Streamlit app
+    call this directly, so there's a single source of truth instead of
+    two copies that can quietly drift apart.
+    """
+    if live:
+        target_rows = pd.DataFrame(fetch_qualifying_live(season, round_))
         combined = pd.concat([history, target_rows], ignore_index=True)
     else:
         combined = history.copy()
 
+    # Features are built on the COMBINED dataframe, after concatenation,
+    # so the target race's rolling/history features can see real prior
+    # races rather than nothing.
     combined = build_features(combined)
 
-    before_mask = (combined["season"] < args.season) | (
-        (combined["season"] == args.season) & (combined["round"] < args.round)
+    before_mask = (combined["season"] < season) | (
+        (combined["season"] == season) & (combined["round"] < round_)
     )
     train = combined[before_mask].copy()
-    target = combined[(combined["season"] == args.season) & (combined["round"] == args.round)].copy()
+    target = combined[(combined["season"] == season) & (combined["round"] == round_)].copy()
 
     if target.empty:
-        raise SystemExit(
-            f"No data found for season {args.season} round {args.round}. "
-            f"Use --live for a race not yet in the CSV."
+        raise ValueError(
+            f"No data found for season {season} round {round_}. Use live=True for a race not yet in the CSV."
         )
 
     fill = train[NUMERIC_FEATURES].mean()
@@ -136,6 +136,19 @@ def main():
     target["blend_score"] = GRID_WEIGHT * target["grid"] + (1 - GRID_WEIGHT) * target["model_pred"]
     target = target.sort_values("blend_score").reset_index(drop=True)
     target["predicted_position"] = range(1, len(target) + 1)
+    return target
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--season", type=int, required=True)
+    parser.add_argument("--round", type=int, required=True)
+    parser.add_argument("--live", action="store_true",
+                         help="Fetch live qualifying from Jolpica instead of using the historical CSV")
+    args = parser.parse_args()
+
+    history = pd.read_csv(RESULTS_PATH)
+    target = predict_race(history, args.season, args.round, live=args.live)
 
     print(f"\nPredicted finishing order -- {target['race_name'].iloc[0]} ({args.season} round {args.round}):\n")
     display_df = target.copy()
