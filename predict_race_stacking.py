@@ -84,28 +84,41 @@ def build_features(df: pd.DataFrame) -> pd.DataFrame:
 def predict_race(history: pd.DataFrame, season: int, round_: int, live: bool = False) -> pd.DataFrame:
     if live:
         target_rows = pd.DataFrame(fetch_qualifying_live(season, round_))
-        combined = pd.concat([history, target_rows], ignore_index=True)
-    else:
-        combined = history.copy()
-
-    # Features are built on the COMBINED dataframe so live races can see historical context
-    combined = build_features(combined)
-
-    before_mask = (combined["season"] < season) | (
-        (combined["season"] == season) & (combined["round"] < round_)
-    )
-    train = combined[before_mask].copy()
-    target = combined[(combined["season"] == season) & (combined["round"] == round_)].copy()
-
-    if target.empty:
-        raise ValueError(
-            f"No data found for season {season} round {round_}. Use live=True for an upcoming race."
+        # Build features on history ONLY — never contaminate with live NaN rows
+        history_feat = build_features(history.copy())
+        # For live target, grab each driver's most recent feature values from history
+        latest = (
+            history_feat.sort_values(["season", "round"])
+            .groupby("driver_id")
+            .last()
+            .reset_index()
         )
+        # Merge live grid onto those features
+        target = target_rows.merge(
+            latest[["driver_id"] + NUMERIC_FEATURES],
+            on="driver_id", how="left"
+        )
+        # Override grid with the actual qualifying position
+        target["grid"] = target_rows["grid"].values
+        train = history_feat[history_feat["position"].notna()].copy()
+    else:
+        combined = build_features(history.copy())
+        before_mask = (combined["season"] < season) | (
+            (combined["season"] == season) & (combined["round"] < round_)
+        )
+        train = combined[before_mask & combined["position"].notna()].copy()
+        target = combined[
+            (combined["season"] == season) & (combined["round"] == round_)
+        ].copy()
+        if target.empty:
+            raise ValueError(
+                f"No data found for season {season} round {round_}. Use live=True for an upcoming race."
+            )
 
-    # Impute missing historical structural features smoothly
     fill = train[NUMERIC_FEATURES].mean()
     X_train = train[NUMERIC_FEATURES].fillna(fill).fillna(0)
     y_train = train["position"]
+    X_target = target[NUMERIC_FEATURES].fillna(fill).fillna(0)
     X_target = target[NUMERIC_FEATURES].fillna(fill).fillna(0)
 
     # Define base estimators tailored to small data sizes
