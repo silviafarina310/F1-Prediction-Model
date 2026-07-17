@@ -24,7 +24,8 @@ import requests
 import pandas as pd
 
 BASE_URL = "https://api.jolpi.ca/ergast/f1"
-RESULTS_PATH = "f1_results_2022_2026.csv"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+RESULTS_PATH = os.path.join(SCRIPT_DIR, "f1_results_2022_2026.csv")
 PAGE_SIZE = 100
 REQUEST_DELAY = 0.3
 

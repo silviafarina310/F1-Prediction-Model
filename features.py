@@ -6,10 +6,12 @@ computed, so a row never sees information from its own race or any
 race that hasn't happened yet. 
 """
 
+import os
 import pandas as pd
 
-IN_PATH = "f1_results_2022_2026.csv"
-OUT_PATH = "f1_features_2022_2026.csv"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+IN_PATH = os.path.join(SCRIPT_DIR, "f1_results_2022_2026.csv")
+OUT_PATH = os.path.join(SCRIPT_DIR, "f1_features_2022_2026.csv")
 
 FINISH_STATUSES = {"Finished", "Lapped", "+1 Lap", "+2 Laps", "+3 Laps"}
 

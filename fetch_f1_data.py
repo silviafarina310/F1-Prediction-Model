@@ -1,21 +1,23 @@
 """
 Pulls Formula 1 race results for the 2022-2026 seasons from the Jolpica F1
 API (https://github.com/jolpica/jolpica-f1).
-
+ 
 Each row in the output is one driver's result in one race, including their
 starting grid position, finishing position, points, status, and basic
 driver/constructor/circuit info
  
 """
+import os
 import requests
 import pandas as pd
 import time
-
+ 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_URL = "https://api.jolpi.ca/ergast/f1"
 SEASONS = [2022, 2023, 2024, 2025, 2026]
 PAGE_SIZE = 100  # Max number of results per page
 REQUEST_DELAY = 0.5  # Delay between API requests in seconds
-
+ 
 def fetch_season_results(season):
     rows = []
     offset = 0
@@ -26,18 +28,18 @@ def fetch_season_results(season):
         data = response.json()["MRData"]
         total = int(data["total"])
         races = data["RaceTable"]["Races"]
-
+ 
         for race in races:
             for result in race["Results"]:
                 rows.append(_flatten(season, race, result))
-
+ 
         offset += PAGE_SIZE
         time.sleep(REQUEST_DELAY)  # Be polite to the API
         if offset >= total:
             break
     
     return rows
-
+ 
 def _get_with_retry(url, params, max_retries=5):
     for attempt in range(max_retries):
         resp = requests.get(url, params=params, timeout= 30)
@@ -49,7 +51,7 @@ def _get_with_retry(url, params, max_retries=5):
         resp.raise_for_status()
         return resp
     raise RuntimeError(f"Failed to fetch data from {url} after {max_retries} attempts")
-
+ 
 def _flatten(season, race, result):
     circuit = race["Circuit"]
     driver = result["Driver"]
@@ -79,7 +81,7 @@ def _flatten(season, race, result):
         "laps": int(result["laps"]),
         "status": result["status"]
     }
-
+ 
 def main():
     all_rows = []
     for season in SEASONS:
@@ -89,9 +91,9 @@ def main():
         all_rows.extend(rows)
     
     df = pd.DataFrame(all_rows)
-    out_path = "f1_results_2022_2026.csv"
+    out_path = os.path.join(SCRIPT_DIR, "f1_results_2022_2026.csv")
     df.to_csv(out_path, index=False)
     print(f"\nSaved {len(df)} rows to {out_path}")
-
+ 
 if __name__ == "__main__":
     main()

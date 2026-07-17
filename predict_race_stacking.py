@@ -7,12 +7,14 @@ blended with the starting grid position.
 """
 
 import argparse
+import os
 import requests
 import pandas as pd
 from sklearn.linear_model import Ridge
 from sklearn.ensemble import RandomForestRegressor, StackingRegressor
 
-RESULTS_PATH = "f1_results_2022_2026.csv"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+RESULTS_PATH = os.path.join(SCRIPT_DIR, "f1_results_2022_2026.csv")
 GRID_WEIGHT = 0.4  # 40% grid, 60% stacking model prediction
 FINISH_STATUSES = {"Finished", "Lapped", "+1 Lap", "+2 Laps", "+3 Laps"}
 NUMERIC_FEATURES = [
