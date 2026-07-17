@@ -1991,3 +1991,25 @@ season,round,race_name,circuit_id,circuit_name,country,latitude,longitude,driver
 2026,7,Barcelona Grand Prix,catalunya,Circuit de Barcelona-Catalunya,Spain,41.57,2.26111,hulkenberg,HUL,Nico,Hülkenberg,1987-08-19,German,audi,Audi,9,20,R,0.0,29,Retired
 2026,7,Barcelona Grand Prix,catalunya,Circuit de Barcelona-Catalunya,Spain,41.57,2.26111,bottas,BOT,Valtteri,Bottas,1989-08-28,Finnish,cadillac,Cadillac F1 Team,20,21,R,0.0,15,Retired
 2026,7,Barcelona Grand Prix,catalunya,Circuit de Barcelona-Catalunya,Spain,41.57,2.26111,stroll,STR,Lance,Stroll,1998-10-29,Canadian,aston_martin,Aston Martin,21,22,R,0.0,5,Retired
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,russell,RUS,George,Russell,1998-02-15,British,mercedes,Mercedes,1,1,1,25.0,71,Finished
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,max_verstappen,VER,Max,Verstappen,1997-09-30,Dutch,red_bull,Red Bull,5,2,2,18.0,71,Finished
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,antonelli,ANT,Andrea Kimi,Antonelli,2006-08-25,Italian,mercedes,Mercedes,4,3,3,15.0,71,Finished
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,piastri,PIA,Oscar,Piastri,2001-04-06,Australian,mclaren,McLaren,7,4,4,12.0,71,Finished
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,hamilton,HAM,Lewis,Hamilton,1985-01-07,British,ferrari,Ferrari,3,5,5,10.0,71,Finished
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,hadjar,HAD,Isack,Hadjar,2004-09-28,French,red_bull,Red Bull,8,6,6,8.0,71,Finished
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,norris,NOR,Lando,Norris,1999-11-13,British,mclaren,McLaren,6,7,7,6.0,71,Finished
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,leclerc,LEC,Charles,Leclerc,1997-10-16,Monegasque,ferrari,Ferrari,2,8,8,4.0,71,Finished
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,lawson,LAW,Liam,Lawson,2002-02-11,New Zealander,rb,RB F1 Team,9,9,9,2.0,70,Lapped
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,arvid_lindblad,LIN,Arvid,Lindblad,2007-08-08,British,rb,RB F1 Team,10,10,10,1.0,70,Lapped
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,bortoleto,BOR,Gabriel,Bortoleto,2004-10-14,Brazilian,audi,Audi,12,11,11,0.0,70,Lapped
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,hulkenberg,HUL,Nico,Hülkenberg,1987-08-19,German,audi,Audi,14,12,12,0.0,70,Lapped
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,gasly,GAS,Pierre,Gasly,1996-02-07,French,alpine,Alpine F1 Team,11,13,13,0.0,70,Lapped
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,bearman,BEA,Oliver,Bearman,2005-05-08,British,haas,Haas F1 Team,13,14,14,0.0,70,Lapped
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,colapinto,COL,Franco,Colapinto,2003-05-27,Argentine,alpine,Alpine F1 Team,16,15,15,0.0,70,Lapped
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,ocon,OCO,Esteban,Ocon,1996-09-17,French,haas,Haas F1 Team,15,16,16,0.0,69,Lapped
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,albon,ALB,Alexander,Albon,1996-03-23,Thai,williams,Williams,18,17,17,0.0,69,Lapped
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,alonso,ALO,Fernando,Alonso,1981-07-29,Spanish,aston_martin,Aston Martin,21,18,18,0.0,68,Lapped
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,stroll,STR,Lance,Stroll,1998-10-29,Canadian,aston_martin,Aston Martin,22,19,R,0.0,45,Retired
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,sainz,SAI,Carlos,Sainz,1994-09-01,Spanish,williams,Williams,17,20,R,0.0,23,Retired
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,perez,PER,Sergio,Pérez,1990-01-26,Mexican,cadillac,Cadillac F1 Team,19,21,R,0.0,4,Retired
+2026,8,Austrian Grand Prix,red_bull_ring,Red Bull Ring,Austria,47.2197,14.7647,bottas,BOT,Valtteri,Bottas,1989-08-28,Finnish,cadillac,Cadillac F1 Team,20,22,R,0.0,2,Retired
