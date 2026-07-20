@@ -2035,3 +2035,25 @@ season,round,race_name,circuit_id,circuit_name,country,latitude,longitude,driver
 2026,9,British Grand Prix,silverstone,Silverstone Circuit,UK,52.0786,-1.01694,max_verstappen,VER,Max,Verstappen,1997-09-30,Dutch,red_bull,Red Bull,7,20,20,0.0,46,Retired
 2026,9,British Grand Prix,silverstone,Silverstone Circuit,UK,52.0786,-1.01694,albon,ALB,Alexander,Albon,1996-03-23,Thai,williams,Williams,16,21,R,0.0,43,Retired
 2026,9,British Grand Prix,silverstone,Silverstone Circuit,UK,52.0786,-1.01694,hulkenberg,HUL,Nico,Hülkenberg,1987-08-19,German,audi,Audi,12,22,R,0.0,36,Retired
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,antonelli,ANT,Andrea Kimi,Antonelli,2006-08-25,Italian,mercedes,Mercedes,1,1,1,25.0,44,Finished
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,leclerc,LEC,Charles,Leclerc,1997-10-16,Monegasque,ferrari,Ferrari,4,2,2,18.0,44,Finished
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,max_verstappen,VER,Max,Verstappen,1997-09-30,Dutch,red_bull,Red Bull,2,3,3,15.0,44,Finished
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,hamilton,HAM,Lewis,Hamilton,1985-01-07,British,ferrari,Ferrari,5,4,4,12.0,44,Finished
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,piastri,PIA,Oscar,Piastri,2001-04-06,Australian,mclaren,McLaren,6,5,5,10.0,44,Finished
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,hadjar,HAD,Isack,Hadjar,2004-09-28,French,red_bull,Red Bull,21,6,6,8.0,44,Finished
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,norris,NOR,Lando,Norris,1999-11-13,British,mclaren,McLaren,13,7,7,6.0,44,Finished
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,bortoleto,BOR,Gabriel,Bortoleto,2004-10-14,Brazilian,audi,Audi,8,8,8,4.0,44,Finished
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,arvid_lindblad,LIN,Arvid,Lindblad,2007-08-08,British,rb,RB F1 Team,7,9,9,2.0,44,Finished
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,colapinto,COL,Franco,Colapinto,2003-05-27,Argentine,alpine,Alpine F1 Team,11,10,10,1.0,44,Finished
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,gasly,GAS,Pierre,Gasly,1996-02-07,French,alpine,Alpine F1 Team,10,11,11,0.0,44,Finished
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,lawson,LAW,Liam,Lawson,2002-02-11,New Zealander,rb,RB F1 Team,9,12,12,0.0,44,Finished
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,hulkenberg,HUL,Nico,Hülkenberg,1987-08-19,German,audi,Audi,12,13,13,0.0,44,Finished
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,bearman,BEA,Oliver,Bearman,2005-05-08,British,haas,Haas F1 Team,14,14,14,0.0,44,Finished
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,albon,ALB,Alexander,Albon,1996-03-23,Thai,williams,Williams,15,15,15,0.0,44,Finished
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,sainz,SAI,Carlos,Sainz,1994-09-01,Spanish,williams,Williams,19,16,16,0.0,44,Finished
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,ocon,OCO,Esteban,Ocon,1996-09-17,French,haas,Haas F1 Team,16,17,17,0.0,44,Finished
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,bottas,BOT,Valtteri,Bottas,1989-08-28,Finnish,cadillac,Cadillac F1 Team,17,18,18,0.0,43,Lapped
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,alonso,ALO,Fernando,Alonso,1981-07-29,Spanish,aston_martin,Aston Martin,22,19,19,0.0,42,Lapped
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,stroll,STR,Lance,Stroll,1998-10-29,Canadian,aston_martin,Aston Martin,20,20,R,0.0,25,Retired
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,perez,PER,Sergio,Pérez,1990-01-26,Mexican,cadillac,Cadillac F1 Team,18,21,R,0.0,13,Retired
+2026,10,Belgian Grand Prix,spa,Circuit de Spa-Francorchamps,Belgium,50.4372,5.97139,russell,RUS,George,Russell,1998-02-15,British,mercedes,Mercedes,3,22,R,0.0,0,Retired
